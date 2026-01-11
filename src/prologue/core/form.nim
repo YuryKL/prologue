@@ -58,7 +58,7 @@ func parseFormPart*(body, contentType: string): FormPart =
     tail = data[pos ..< ^2] # 2 because of protocol newline after content disposition body
 
     if not head.startsWith("Content-Disposition"):
-      break
+      continue
 
     for line in head.splitLines:
       let header = line.parseHeader
@@ -96,7 +96,10 @@ func parseFormPart*(body, contentType: string): FormPart =
 
 func parseFormParams*(request: var Request, contentType: string) =
   ## Parses get or post or query parameters.
-  let mediaType = parseContentType(contentType)
+  let mediaType = try:
+      parseContentType(contentType)
+    except CatchableError:
+      MediaType(parameters: initTable[string, string]())
 
   if mediaType.mainType == "application" and mediaType.subType == "x-www-form-urlencoded":
     request.formParams = initFormPart()
