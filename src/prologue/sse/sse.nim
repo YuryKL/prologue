@@ -20,9 +20,6 @@
 ## enables you to utilize HTTP niceties that Websockets don't provide out of the box,
 ## such as auto-reconnect, compression, ordered delivery, etc
 ##
-#### TODO: REMOVE
-## Rationale for compression as a neccesity, could not implement it as regular middleware since sse responses do not end like traditional responses
-## (https://andersmurphy.com/2025/04/15/why-you-should-use-brotli-sse.html)
 ####
 ## Example:
 ## ```nim
